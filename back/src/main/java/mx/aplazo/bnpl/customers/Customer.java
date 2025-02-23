@@ -2,6 +2,7 @@ package mx.aplazo.bnpl.customers;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,6 +25,13 @@ public class Customer {
   @Column(nullable = false)
   private Date dateOfBirth;
 
+  @Column(nullable = false, columnDefinition = "TIMESTAMPTZ")
+  private Instant createdAt;
+
+  public UUID getId() {
+    return id;
+  }
+
   public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
@@ -38,5 +46,13 @@ public class Customer {
 
   public void setDateOfBirth(Date dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
+  }
+
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Instant createdAt) {
+    this.createdAt = createdAt;
   }
 }

@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ValidationExceptionHandler {
   @ExceptionHandler(HttpMessageNotReadableException.class)
 
-  public ResponseEntity<?> invalidBody(HttpServletRequest request) {
+  public ResponseEntity<?> invalidBody(HttpMessageNotReadableException ex,HttpServletRequest request) {
     // TODO: add code and error
+    System.out.println(ex.getMessage());
     ErrorResponse response = new ErrorResponse(
             "???",
             "INVALID_REQUEST",
@@ -34,6 +35,7 @@ public class ValidationExceptionHandler {
             .reduce("", (acc, error) -> acc + error + "\n");
 
     // TODO: add code and error
+    System.out.println(ex.getMessage());
     ErrorResponse response = new ErrorResponse(
             "???",
             "INVALID_REQUEST",
