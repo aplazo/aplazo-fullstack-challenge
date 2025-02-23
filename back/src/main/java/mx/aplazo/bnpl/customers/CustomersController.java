@@ -2,7 +2,6 @@ package mx.aplazo.bnpl.customers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ public class CustomersController {
   @PostMapping
   public ResponseEntity<CustomerResponse> create(@Valid @RequestBody CreateCustomerRequest createCustomerRequest) {
     CustomerResponse body = customersService.create(createCustomerRequest);
-    URI location = URI.create("/customers/" + body.getId());
+    URI location = URI.create("/customers/" + body.id());
     String token = ""; // TODO: implement authentication
     return ResponseEntity.created(location)
             .header("X-Auth-Token", token)
