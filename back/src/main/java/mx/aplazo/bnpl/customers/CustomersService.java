@@ -25,18 +25,18 @@ public class CustomersService {
 
   public CustomerResponse findById(UUID customerId) {
     Customer customer = customersRepository.findById(customerId).orElseThrow(
-      () -> new CustomerNotFoundException("Customer not found")
+            () -> new CustomerNotFoundException("Customer with id " + customerId + " not found")
     );
     return toCustomerResponse(customer);
   }
 
   private CustomerResponse toCustomerResponse(Customer customer) {
     return new CustomerResponse(
-      customer.getId(),
-      // TODO: where is creditLineAmount and availableCreditLineAmount?
-      0,
-      0,
-      customer.getCreatedAt()
+            customer.getId(),
+            // TODO: where is creditLineAmount and availableCreditLineAmount?
+            0,
+            0,
+            customer.getCreatedAt()
     );
   }
 }

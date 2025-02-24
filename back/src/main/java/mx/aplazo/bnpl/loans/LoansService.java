@@ -18,7 +18,7 @@ public class LoansService {
 
   public LoanResponse findById(UUID loanId) {
     Loan loan = loansRepository.findById(loanId)
-            .orElseThrow(() -> new LoanNotFoundException("Loan not found"));
+            .orElseThrow(() -> new LoanNotFoundException("Loan with id " + loanId + " not found"));
     return mapToLoanResponse(loan);
   }
 
