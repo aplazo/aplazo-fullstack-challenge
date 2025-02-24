@@ -1,7 +1,8 @@
-package mx.aplazo.bnpl.validation;
+package mx.aplazo.bnpl.validation.annotations;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;

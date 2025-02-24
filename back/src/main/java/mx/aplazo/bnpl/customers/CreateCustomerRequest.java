@@ -1,10 +1,9 @@
 package mx.aplazo.bnpl.customers;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
-import mx.aplazo.bnpl.validation.AgeRange;
+import mx.aplazo.bnpl.validation.annotations.AgeRange;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;

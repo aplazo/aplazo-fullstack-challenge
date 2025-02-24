@@ -1,4 +1,4 @@
-package mx.aplazo.bnpl.validation;
+package mx.aplazo.bnpl.validation.annotations;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -11,9 +11,12 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AgeRange {
   String message() default "You must be between {min} and {max} years old";
+
   Class<?>[] groups() default {};
+
   Class<? extends Payload>[] payload() default {};
 
   int min();
+
   int max();
 }
