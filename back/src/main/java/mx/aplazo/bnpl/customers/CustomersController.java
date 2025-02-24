@@ -3,6 +3,8 @@ package mx.aplazo.bnpl.customers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import mx.aplazo.bnpl.authentication.JwtService;
+import mx.aplazo.bnpl.customers.dto.request.CreateCustomerRequest;
+import mx.aplazo.bnpl.customers.dto.response.CustomerResponse;
 import mx.aplazo.bnpl.customers.exception.CustomerNotFoundException;
 import mx.aplazo.bnpl.exceptions.ErrorCode;
 import mx.aplazo.bnpl.exceptions.ErrorResponseBuilder;

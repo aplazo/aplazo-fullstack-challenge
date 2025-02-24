@@ -5,6 +5,8 @@ import jakarta.validation.Valid;
 import mx.aplazo.bnpl.authentication.AuthTokenProvider;
 import mx.aplazo.bnpl.exceptions.ErrorCode;
 import mx.aplazo.bnpl.exceptions.ErrorResponseBuilder;
+import mx.aplazo.bnpl.loans.dto.request.CreateLoanRequest;
+import mx.aplazo.bnpl.loans.dto.response.LoanResponse;
 import mx.aplazo.bnpl.loans.exception.LoanNotFoundException;
 import mx.aplazo.bnpl.validation.exception.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;

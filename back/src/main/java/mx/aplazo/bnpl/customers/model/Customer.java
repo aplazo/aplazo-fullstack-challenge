@@ -1,4 +1,4 @@
-package mx.aplazo.bnpl.customers;
+package mx.aplazo.bnpl.customers.model;
 
 import jakarta.persistence.*;
 

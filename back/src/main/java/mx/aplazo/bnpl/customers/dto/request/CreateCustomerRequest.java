@@ -1,4 +1,4 @@
-package mx.aplazo.bnpl.customers;
+package mx.aplazo.bnpl.customers.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Past;

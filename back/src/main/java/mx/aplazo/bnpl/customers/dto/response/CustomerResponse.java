@@ -1,4 +1,4 @@
-package mx.aplazo.bnpl.customers;
+package mx.aplazo.bnpl.customers.dto.response;
 
 import java.time.Instant;
 import java.util.UUID;

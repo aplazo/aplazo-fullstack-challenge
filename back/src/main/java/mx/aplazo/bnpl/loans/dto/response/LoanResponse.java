@@ -1,4 +1,4 @@
-package mx.aplazo.bnpl.loans;
+package mx.aplazo.bnpl.loans.dto.response;
 
 import java.time.Instant;
 import java.util.UUID;

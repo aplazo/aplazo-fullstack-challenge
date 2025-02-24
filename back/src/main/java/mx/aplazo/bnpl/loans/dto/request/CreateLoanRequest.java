@@ -1,4 +1,4 @@
-package mx.aplazo.bnpl.loans;
+package mx.aplazo.bnpl.loans.dto.request;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;

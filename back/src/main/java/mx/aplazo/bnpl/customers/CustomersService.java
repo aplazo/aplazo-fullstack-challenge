@@ -1,7 +1,10 @@
 package mx.aplazo.bnpl.customers;
 
 import mx.aplazo.bnpl.customers.constants.CreditLineConstants;
+import mx.aplazo.bnpl.customers.dto.request.CreateCustomerRequest;
+import mx.aplazo.bnpl.customers.dto.response.CustomerResponse;
 import mx.aplazo.bnpl.customers.exception.CustomerNotFoundException;
+import mx.aplazo.bnpl.customers.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
