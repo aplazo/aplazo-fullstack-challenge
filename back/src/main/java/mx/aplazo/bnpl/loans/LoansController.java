@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/loans")
+@RequestMapping("/v1/loans")
 public class LoansController {
   @Autowired
   private LoansService loansService;

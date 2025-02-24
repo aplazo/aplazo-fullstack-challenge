@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/v1/customers")
 public class CustomersController {
   @Autowired
   private CustomersService customersService;
