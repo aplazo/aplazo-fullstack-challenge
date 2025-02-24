@@ -14,6 +14,11 @@ public class CreateLoanRequest {
   @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
   private double amount;
 
+  public CreateLoanRequest(String customerId, double amount) {
+    this.customerId = customerId;
+    this.amount = amount;
+  }
+
   public UUID getCustomerId() {
     return UUID.fromString(customerId);
   }

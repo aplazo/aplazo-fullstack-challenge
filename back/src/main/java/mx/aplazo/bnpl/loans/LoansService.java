@@ -94,6 +94,7 @@ public class LoansService {
   }
 
   private LoanResponse mapToLoanResponse(Loan loan) {
+    // TODO: this doesn't provide any order guarantee
     List<InstallmentResponse> installmentResponses = loan.getInstallments().stream()
             .map(installment -> new InstallmentResponse(installment.getAmount(), installment.getScheduledPaymentDate(), installment.getStatus()))
             .toList();

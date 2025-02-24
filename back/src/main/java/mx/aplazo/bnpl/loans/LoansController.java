@@ -7,6 +7,7 @@ import mx.aplazo.bnpl.exceptions.ErrorCode;
 import mx.aplazo.bnpl.exceptions.ErrorResponseBuilder;
 import mx.aplazo.bnpl.loans.dto.request.CreateLoanRequest;
 import mx.aplazo.bnpl.loans.dto.response.LoanResponse;
+import mx.aplazo.bnpl.loans.exception.InvalidLoanRequestException;
 import mx.aplazo.bnpl.loans.exception.LoanNotFoundException;
 import mx.aplazo.bnpl.validation.exception.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class LoansController {
   public ResponseEntity<LoanResponse> create(@Valid @RequestBody CreateLoanRequest createLoanRequest) {
     UUID customerId = AuthTokenProvider.getToken();
     LoanResponse loan = loansService.create(customerId, createLoanRequest);
-    URI location = URI.create("/loans/" + loan.id());
+    URI location = URI.create("/v1/loans/" + loan.id());
     return ResponseEntity.created(location)
             .body(loan);
   }
@@ -47,6 +48,12 @@ public class LoansController {
   @ExceptionHandler(LoanNotFoundException.class)
   public ResponseEntity<ErrorResponse> handleLoanNotFound(LoanNotFoundException ex, HttpServletRequest request) {
     ErrorCode error = ErrorCode.LOAN_NOT_FOUND;
+    return ErrorResponseBuilder.toResponse(ex.getMessage(), request, error);
+  }
+
+  @ExceptionHandler(InvalidLoanRequestException.class)
+  public ResponseEntity<ErrorResponse> handleInvalidLoanRequest(InvalidLoanRequestException ex, HttpServletRequest request) {
+    ErrorCode error = ErrorCode.INVALID_LOAN_REQUEST;
     return ErrorResponseBuilder.toResponse(ex.getMessage(), request, error);
   }
 }

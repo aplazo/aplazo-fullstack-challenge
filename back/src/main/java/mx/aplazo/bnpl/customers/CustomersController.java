@@ -28,7 +28,7 @@ public class CustomersController {
   @PostMapping
   public ResponseEntity<CustomerResponse> create(@Valid @RequestBody CreateCustomerRequest createCustomerRequest) {
     CustomerResponse body = customersService.create(createCustomerRequest);
-    URI location = URI.create("/customers/" + body.id());
+    URI location = URI.create("/v1/customers/" + body.id());
     String token = jwtService.generateToken(body.id());
     return ResponseEntity.created(location)
             .header("X-Auth-Token", token)
