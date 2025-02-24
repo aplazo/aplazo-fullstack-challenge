@@ -2,6 +2,7 @@ package mx.aplazo.bnpl.customers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import mx.aplazo.bnpl.authentication.JwtService;
 import mx.aplazo.bnpl.customers.exception.CustomerNotFoundException;
 import mx.aplazo.bnpl.exceptions.ErrorCode;
 import mx.aplazo.bnpl.exceptions.ErrorResponseBuilder;
@@ -19,12 +20,14 @@ import java.util.UUID;
 public class CustomersController {
   @Autowired
   private CustomersService customersService;
+  @Autowired
+  private JwtService jwtService;
 
   @PostMapping
   public ResponseEntity<CustomerResponse> create(@Valid @RequestBody CreateCustomerRequest createCustomerRequest) {
     CustomerResponse body = customersService.create(createCustomerRequest);
     URI location = URI.create("/customers/" + body.id());
-    String token = ""; // TODO: implement authentication
+    String token = jwtService.generateToken(body.id());
     return ResponseEntity.created(location)
             .header("X-Auth-Token", token)
             .body(body);
