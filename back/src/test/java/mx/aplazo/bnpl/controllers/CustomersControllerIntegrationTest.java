@@ -6,6 +6,7 @@ import mx.aplazo.bnpl.customers.constants.CreditLineConstants;
 import mx.aplazo.bnpl.customers.dto.request.CreateCustomerRequest;
 import mx.aplazo.bnpl.customers.dto.response.CustomerResponse;
 import mx.aplazo.bnpl.customers.model.Customer;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.util.Date;
 import java.util.UUID;
@@ -23,10 +25,23 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = BnplApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CustomersControllerIntegrationTest {
+  static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14.1")
+          .withDatabaseName("testdb")
+          .withUsername("testuser")
+          .withPassword("testpass");
+
   TestRestTemplate restTemplate = new TestRestTemplate();
 
   @LocalServerPort
   private int port;
+
+  @BeforeAll
+  static void beforeAll() {
+    postgres.start();
+    System.setProperty("SPRING_DATASOURCE_URL", postgres.getJdbcUrl());
+    System.setProperty("SPRING_DATASOURCE_USERNAME", postgres.getUsername());
+    System.setProperty("SPRING_DATASOURCE_PASSWORD", postgres.getPassword());
+  }
 
   @Test
   public void testCreateCustomer() {
