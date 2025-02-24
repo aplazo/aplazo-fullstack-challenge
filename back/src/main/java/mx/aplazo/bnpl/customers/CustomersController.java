@@ -2,6 +2,7 @@ package mx.aplazo.bnpl.customers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import mx.aplazo.bnpl.authentication.AuthTokenProvider;
 import mx.aplazo.bnpl.authentication.JwtService;
 import mx.aplazo.bnpl.customers.dto.request.CreateCustomerRequest;
 import mx.aplazo.bnpl.customers.dto.response.CustomerResponse;
@@ -37,7 +38,8 @@ public class CustomersController {
 
   @GetMapping("{customerId}")
   public CustomerResponse findById(@PathVariable UUID customerId) {
-    return customersService.findById(customerId);
+    UUID tokenCustomerId = AuthTokenProvider.getCustomerId();
+    return customersService.findById(customerId, tokenCustomerId);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

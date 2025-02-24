@@ -11,7 +11,7 @@ import java.util.UUID;
 public class AuthTokenProvider {
   static Logger logger = LoggerFactory.getLogger(AuthTokenProvider.class);
 
-  public static UUID getToken() {
+  public static UUID getCustomerId() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     logger.info("Getting token from authentication context");
     if (authentication == null || !authentication.isAuthenticated()) {

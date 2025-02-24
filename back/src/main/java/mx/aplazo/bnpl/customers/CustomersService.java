@@ -39,11 +39,16 @@ public class CustomersService {
     return toCustomerResponse(customer);
   }
 
-  public CustomerResponse findById(UUID customerId) {
+  public CustomerResponse findById(UUID customerId, UUID tokenCustomerId) {
     logger.info("Finding customer with id: " + customerId);
     Customer customer = customersRepository.findById(customerId).orElseThrow(
             () -> new CustomerNotFoundException("Customer with id " + customerId + " not found")
     );
+    if (!customer.getId().equals(tokenCustomerId)) {
+      logger.error("Customer with id: " + tokenCustomerId + " is not authorized to access customer with id: " + customerId);
+      throw new CustomerNotFoundException("Customer with id " + customerId + " not found");
+    }
+
     return toCustomerResponse(customer);
   }
 

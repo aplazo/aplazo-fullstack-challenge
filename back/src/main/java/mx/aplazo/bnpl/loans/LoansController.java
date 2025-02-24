@@ -26,7 +26,7 @@ public class LoansController {
 
   @PostMapping
   public ResponseEntity<LoanResponse> create(@Valid @RequestBody CreateLoanRequest createLoanRequest) {
-    UUID customerId = AuthTokenProvider.getToken();
+    UUID customerId = AuthTokenProvider.getCustomerId();
     LoanResponse loan = loansService.create(customerId, createLoanRequest);
     URI location = URI.create("/v1/loans/" + loan.id());
     return ResponseEntity.created(location)
@@ -35,7 +35,7 @@ public class LoansController {
 
   @GetMapping("/{loanId}")
   public LoanResponse findById(@PathVariable UUID loanId) {
-    UUID customerId = AuthTokenProvider.getToken();
+    UUID customerId = AuthTokenProvider.getCustomerId();
     return loansService.findById(customerId, loanId);
   }
 
