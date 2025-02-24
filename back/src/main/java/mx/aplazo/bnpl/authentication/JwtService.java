@@ -2,6 +2,7 @@ package mx.aplazo.bnpl.authentication;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import mx.aplazo.bnpl.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Service
 public class JwtService {
+  DateUtils dateUtils = new DateUtils();
   @Autowired
   private JwtConfiguration jwtConfiguration;
 
@@ -39,7 +41,7 @@ public class JwtService {
             .parseClaimsJws(token)
             .getBody()
             .getExpiration()
-            .before(new Date());
+            .before(dateUtils.now());
   }
 
   public UsernamePasswordAuthenticationToken getAuthentication(String token) {
