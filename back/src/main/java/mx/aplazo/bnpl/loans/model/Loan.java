@@ -1,9 +1,11 @@
 package mx.aplazo.bnpl.loans.model;
 
 import jakarta.persistence.*;
+import mx.aplazo.bnpl.customers.model.Customer;
 import mx.aplazo.bnpl.loans.enums.LoanStatus;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,14 +15,18 @@ public class Loan {
   @GeneratedValue
   private UUID id;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "customer_id", nullable = false)
+  private Customer customer;
+
   @Column(nullable = false)
   private double amount;
 
   @Column(nullable = false)
   private LoanStatus status;
 
-  @Column(nullable = false)
-  private UUID customerId;
+  @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Installment> installments = List.of();
 
   @Column(nullable = false, columnDefinition = "TIMESTAMPTZ")
   private Instant createdAt;
@@ -37,20 +43,24 @@ public class Loan {
     this.amount = amount;
   }
 
-  public LoanStatus getStatus() {
-    return status;
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 
   public void setStatus(LoanStatus status) {
     this.status = status;
   }
 
-  public UUID getCustomerId() {
-    return customerId;
+  public List<Installment> getInstallments() {
+    return installments;
   }
 
-  public void setCustomerId(UUID customerId) {
-    this.customerId = customerId;
+  public void setInstallments(List<Installment> installments) {
+    this.installments = installments;
   }
 
   public Instant getCreatedAt() {
