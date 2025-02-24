@@ -25,7 +25,6 @@
               "src/assets"
             ],
             "styles": [
-              "dist/shared-ui/themes/aplazo-light.css",
               "src/styles.css"
             ],
             "scripts": []
