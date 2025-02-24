@@ -26,6 +26,12 @@ public class CreateCustomerRequest {
   @AgeRange(min = 18, max = 65)
   private Date dateOfBirth;
 
+  public CreateCustomerRequest(String firstName, String lastName, String secondLastName, Date dateOfBirth) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.secondLastName = secondLastName;
+    this.dateOfBirth = dateOfBirth;
+  }
 
   public String getFirstName() {
     return firstName;
