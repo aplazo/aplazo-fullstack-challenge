@@ -1,5 +1,6 @@
 package mx.aplazo.bnpl.customers;
 
+import mx.aplazo.bnpl.customers.constants.CreditLineConstants;
 import mx.aplazo.bnpl.customers.exception.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class CustomersService {
     customer.setLastName(createCustomerRequest.getLastName());
     customer.setSecondLastName(createCustomerRequest.getSecondLastName());
     customer.setDateOfBirth(createCustomerRequest.getDateOfBirth());
+    customer.setCreditLineAmount(CreditLineConstants.DEFAULT_CREDIT_LINE_AMOUNT);
+    customer.setAvailableCreditLineAmount(CreditLineConstants.DEFAULT_AVAILABLE_CREDIT_LINE_AMOUNT);
     customer.setCreatedAt(Instant.now());
     customersRepository.save(customer);
     return toCustomerResponse(customer);
@@ -33,9 +36,8 @@ public class CustomersService {
   private CustomerResponse toCustomerResponse(Customer customer) {
     return new CustomerResponse(
             customer.getId(),
-            // TODO: where is creditLineAmount and availableCreditLineAmount?
-            0,
-            0,
+            customer.getCreditLineAmount(),
+            customer.getAvailableCreditLineAmount(),
             customer.getCreatedAt()
     );
   }

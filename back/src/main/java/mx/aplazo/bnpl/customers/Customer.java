@@ -25,6 +25,12 @@ public class Customer {
   @Column(nullable = false)
   private Date dateOfBirth;
 
+  @Column(nullable = false)
+  private double creditLineAmount;
+
+  @Column(nullable = false)
+  private double availableCreditLineAmount;
+
   @Column(nullable = false, columnDefinition = "TIMESTAMPTZ")
   private Instant createdAt;
 
@@ -48,6 +54,22 @@ public class Customer {
     this.dateOfBirth = dateOfBirth;
   }
 
+  public double getCreditLineAmount() {
+    return creditLineAmount;
+  }
+
+  public void setCreditLineAmount(double creditLineAmount) {
+    this.creditLineAmount = creditLineAmount;
+  }
+
+  public double getAvailableCreditLineAmount() {
+    return availableCreditLineAmount;
+  }
+
+  public void setAvailableCreditLineAmount(double availableCreditLineAmount) {
+    this.availableCreditLineAmount = availableCreditLineAmount;
+  }
+
   public Instant getCreatedAt() {
     return createdAt;
   }
@@ -55,4 +77,5 @@ public class Customer {
   public void setCreatedAt(Instant createdAt) {
     this.createdAt = createdAt;
   }
+
 }
