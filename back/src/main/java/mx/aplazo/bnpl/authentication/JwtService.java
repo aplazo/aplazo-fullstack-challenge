@@ -15,7 +15,7 @@ public class JwtService {
   private JwtConfiguration jwtConfiguration;
 
   public String generateToken(UUID customerId) {
-    int expirationTimeInHours = 10;
+    int expirationTimeInHours = jwtConfiguration.getExpirationTimeInHours();
     int expirationTimeInMilliseconds = 1000 * 60 * 60 * expirationTimeInHours;
     return Jwts.builder()
             .setSubject(customerId.toString())
