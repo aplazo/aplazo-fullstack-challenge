@@ -48,5 +48,9 @@ public class CreateCustomerRequest {
   public Date getDateOfBirth() {
     return dateOfBirth;
   }
+
+  public String getFullName() {
+    return firstName + " " + lastName + " " + secondLastName;
+  }
 }
 

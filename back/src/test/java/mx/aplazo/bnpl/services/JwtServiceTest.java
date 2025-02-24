@@ -74,7 +74,7 @@ public class JwtServiceTest {
     when(jwtConfiguration.getSecret()).thenReturn("secret");
     String token = jwtService.generateToken(customerId);
 
-    when(jwtConfiguration.getSecret()).thenReturn("secret");
+    when(dateUtils.now()).thenReturn(new Date());
     boolean isTokenExpired = jwtService.isTokenExpired(token);
 
     assertFalse(isTokenExpired);

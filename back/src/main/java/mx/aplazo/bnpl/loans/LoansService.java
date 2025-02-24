@@ -14,6 +14,8 @@ import mx.aplazo.bnpl.loans.exception.InvalidLoanRequestException;
 import mx.aplazo.bnpl.loans.exception.LoanNotFoundException;
 import mx.aplazo.bnpl.loans.model.Installment;
 import mx.aplazo.bnpl.loans.model.Loan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,8 @@ import java.util.UUID;
 
 @Service
 public class LoansService {
+  Logger logger = LoggerFactory.getLogger(LoansService.class);
+
   @Autowired
   private LoansRepository loansRepository;
 
@@ -34,22 +38,30 @@ public class LoansService {
 
   @Transactional
   public LoanResponse create(UUID customerId, CreateLoanRequest createLoanRequest) {
+    logger.info("Validating loan creation for customer {}", customerId);
+
     if (!customerId.equals(createLoanRequest.getCustomerId())) {
+      logger.error("Customer " + createLoanRequest.getCustomerId() + " does not match authenticated customer " + customerId);
       throw new UnauthorizedException("Customer ID does not match authenticated customer");
     }
 
     boolean hasPendingToPay = loansRepository.existsByCustomerIdAndStatusIn(customerId, new LoanStatus[]{LoanStatus.ACTIVE, LoanStatus.LATE});
     if (hasPendingToPay) {
+      logger.error("Customer " + customerId + " has an active or late loan");
       throw new InvalidLoanRequestException("Customer has an active or late loan");
     }
 
     Customer customer = customersRepository.findById(customerId)
             .orElseThrow(() -> new UnauthorizedException("Customer with id " + customerId + " not found"));
     if (createLoanRequest.getAmount() > customer.getAvailableCreditLineAmount()) {
-      throw new InvalidLoanRequestException("Loan amount exceeds maximum loan amount." +
+      String message = "Loan amount exceeds available credit line amount." +
               " Available credit line amount: " + customer.getAvailableCreditLineAmount() +
-              ", requested loan amount: " + createLoanRequest.getAmount());
+              ", requested loan amount: " + createLoanRequest.getAmount();
+      logger.error(message);
+      throw new InvalidLoanRequestException(message);
     }
+
+    logger.info("Creating loan for customer {}", customerId);
 
     Loan loan = new Loan();
     loan.setAmount(createLoanRequest.getAmount());
@@ -59,6 +71,8 @@ public class LoansService {
 
     int numberOfInstallments = 5;
     double amount = createLoanRequest.getAmount() / numberOfInstallments;
+
+    logger.info("Creating {} installments for loan", numberOfInstallments);
 
     List<Installment> installments = new ArrayList<>();
     LocalDate localDate = LocalDate.now();
@@ -71,23 +85,29 @@ public class LoansService {
       installment.setScheduledPaymentDate(nextPaymentDate);
       installment.setStatus(status);
       installment.setCreatedAt(Instant.now());
+      logger.info("Created installment with amount {} and scheduled payment date {}", amount, nextPaymentDate);
       installments.add(installment);
     }
     loan.setInstallments(installments);
 
+    logger.info("Updating available credit line amount for customer {}", customerId);
     customer.setAvailableCreditLineAmount(
             customer.getAvailableCreditLineAmount() - createLoanRequest.getAmount());
     customersRepository.save(customer);
 
     Loan savedLoan = loansRepository.save(loan);
+    logger.info("Loan created successfully for customer {}", customerId);
+
     return mapToLoanResponse(savedLoan);
   }
 
   public LoanResponse findById(UUID customerId, UUID loanId) {
+    logger.info("Retrieving loan with id {} for customer {}", loanId, customerId);
     Loan loan = loansRepository.findById(loanId)
             .orElseThrow(() -> new LoanNotFoundException("Loan with id " + loanId + " not found"));
     UUID loanCustomerId = loan.getCustomer().getId();
     if (!customerId.equals(loanCustomerId)) {
+      logger.error("Customer " + customerId + " does not match authenticated customer " + loanCustomerId);
       throw new UnauthorizedException("Customer ID does not match authenticated customer");
     }
     return mapToLoanResponse(loan);

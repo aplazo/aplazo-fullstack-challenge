@@ -5,6 +5,8 @@ import mx.aplazo.bnpl.customers.dto.request.CreateCustomerRequest;
 import mx.aplazo.bnpl.customers.dto.response.CustomerResponse;
 import mx.aplazo.bnpl.customers.exception.CustomerNotFoundException;
 import mx.aplazo.bnpl.customers.model.Customer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,15 @@ import java.util.UUID;
 
 @Service
 public class CustomersService {
+  Logger logger = LoggerFactory.getLogger(CustomersService.class);
+
   @Autowired
   private CustomersRepository customersRepository;
 
   public CustomerResponse create(CreateCustomerRequest createCustomerRequest) {
+    String fullName = createCustomerRequest.getFullName();
+    logger.info("Creating customer with full name: " + fullName);
+
     Customer customer = new Customer();
     customer.setFirstName(createCustomerRequest.getFirstName());
     customer.setLastName(createCustomerRequest.getLastName());
@@ -26,10 +33,14 @@ public class CustomersService {
     customer.setAvailableCreditLineAmount(CreditLineConstants.DEFAULT_AVAILABLE_CREDIT_LINE_AMOUNT);
     customer.setCreatedAt(Instant.now());
     customersRepository.save(customer);
+
+    logger.info("Customer with full name: " + fullName + " and id: " + customer.getId() + " created successfully");
+
     return toCustomerResponse(customer);
   }
 
   public CustomerResponse findById(UUID customerId) {
+    logger.info("Finding customer with id: " + customerId);
     Customer customer = customersRepository.findById(customerId).orElseThrow(
             () -> new CustomerNotFoundException("Customer with id " + customerId + " not found")
     );
