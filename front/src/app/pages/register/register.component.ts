@@ -11,14 +11,22 @@ import {
   CreateCustomerRequest,
   CustomersService,
 } from '../../services/customers.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-register',
   templateUrl: './register.component.html',
-  imports: [ReactiveFormsModule, AplazoButtonComponent, AplazoLogoComponent],
+  imports: [
+    ReactiveFormsModule,
+    AplazoButtonComponent,
+    AplazoLogoComponent,
+    NgIf,
+  ],
 })
 export class RegisterComponent implements OnInit {
+  errorMessage: string | null = null;
+
   constructor(private customersService: CustomersService) {}
 
   readonly firstName = new FormControl<string>('', {
@@ -47,7 +55,7 @@ export class RegisterComponent implements OnInit {
       firstName: 'John',
       lastName: 'Doe',
       secondLastName: 'Doe',
-      dateOfBirth: new Date('1990-01-01'),
+      dateOfBirth: new Date('2000-01-01'),
     });
   }
 
@@ -65,12 +73,13 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const dateOfBirth = this.form.value.dateOfBirth?.toISOString() || '';
+    this.errorMessage = null;
+
     const createCustomerRequest: CreateCustomerRequest = {
       firstName: this.form.value.firstName || '',
       lastName: this.form.value.lastName || '',
       secondLastName: this.form.value.secondLastName || '',
-      dateOfBirth,
+      dateOfBirth: this.form.value.dateOfBirth || new Date(),
     };
     this.customersService.createCustomer(createCustomerRequest).subscribe({
       next: (customer) => {
@@ -78,6 +87,8 @@ export class RegisterComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error creating customer:', error);
+        this.errorMessage = error.error?.message || 'Failed to create customer';
+        console.log('Error creating customer:', this.errorMessage);
       },
     });
   }

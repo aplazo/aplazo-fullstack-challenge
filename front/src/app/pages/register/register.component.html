@@ -66,4 +66,8 @@
   >
     Crear cuenta
   </button>
+
+  <div *ngIf="errorMessage" class="p-3">
+    {{ errorMessage }}
+  </div>
 </form>

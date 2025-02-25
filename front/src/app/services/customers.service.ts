@@ -28,7 +28,7 @@ export interface CreateCustomerRequest {
   firstName: string;
   lastName: string;
   secondLastName: string;
-  dateOfBirth: string;
+  dateOfBirth: Date;
 }
 
 export interface CustomerResponse {
