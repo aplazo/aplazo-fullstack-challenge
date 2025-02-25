@@ -1,4 +1,4 @@
-package mx.aplazo.bnpl.validation.exception;
+package mx.aplazo.bnpl.exceptions;
 
 public record ErrorResponse(
         String code,

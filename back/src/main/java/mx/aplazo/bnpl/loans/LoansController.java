@@ -4,12 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import mx.aplazo.bnpl.authentication.AuthTokenProvider;
 import mx.aplazo.bnpl.exceptions.ErrorCode;
+import mx.aplazo.bnpl.exceptions.ErrorResponse;
 import mx.aplazo.bnpl.exceptions.ErrorResponseBuilder;
 import mx.aplazo.bnpl.loans.dto.request.CreateLoanRequest;
 import mx.aplazo.bnpl.loans.dto.response.LoanResponse;
 import mx.aplazo.bnpl.loans.exception.InvalidLoanRequestException;
 import mx.aplazo.bnpl.loans.exception.LoanNotFoundException;
-import mx.aplazo.bnpl.validation.exception.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -42,7 +42,8 @@ public class LoansController {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ErrorResponse> handleLoanValidation(MethodArgumentNotValidException ex, HttpServletRequest request) {
     ErrorCode error = ErrorCode.INVALID_LOAN_REQUEST;
-    return ErrorResponseBuilder.toResponse(ex.getMessage(), request, error);
+    String message = ex.getBindingResult().getFieldError().getDefaultMessage();
+    return ErrorResponseBuilder.toResponse(message, request, error);
   }
 
   @ExceptionHandler(LoanNotFoundException.class)

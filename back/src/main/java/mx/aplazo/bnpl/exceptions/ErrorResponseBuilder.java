@@ -1,7 +1,6 @@
 package mx.aplazo.bnpl.exceptions;
 
 import jakarta.servlet.http.HttpServletRequest;
-import mx.aplazo.bnpl.validation.exception.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 
 public class ErrorResponseBuilder {

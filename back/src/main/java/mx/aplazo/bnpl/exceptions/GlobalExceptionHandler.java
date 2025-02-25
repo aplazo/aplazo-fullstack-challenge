@@ -2,7 +2,6 @@ package mx.aplazo.bnpl.exceptions;
 
 import jakarta.servlet.http.HttpServletRequest;
 import mx.aplazo.bnpl.authentication.exception.UnauthorizedException;
-import mx.aplazo.bnpl.validation.exception.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
