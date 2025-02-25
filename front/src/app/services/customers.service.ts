@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BASE_URL } from './constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomersService {
-  private apiUrl = 'http://localhost:8080/v1/customers';
+  private apiUrl = `${BASE_URL}/customers`;
 
   constructor(private http: HttpClient) {}
 
-  // Fetch user by ID
   getCustomerById(id: number): Observable<CustomerResponse> {
     return this.http.get<CustomerResponse>(`${this.apiUrl}/${id}`);
   }
 
-  // Create a new user
   createCustomer(
     customer: CreateCustomerRequest
   ): Observable<HttpResponse<CustomerResponse>> {
