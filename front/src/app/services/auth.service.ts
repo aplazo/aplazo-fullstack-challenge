@@ -23,7 +23,7 @@ export class AuthService {
     return { id, token };
   }
 
-  removeToken() {
+  deleteUserDetails() {
     localStorage.removeItem(USER_ID_KEY);
     localStorage.removeItem(TOKEN_KEY);
   }

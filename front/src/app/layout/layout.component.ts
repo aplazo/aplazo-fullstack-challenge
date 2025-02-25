@@ -4,6 +4,7 @@ import { AplazoButtonComponent } from '@apz/shared-ui/button';
 import { AplazoDashboardComponents } from '@apz/shared-ui/dashboard';
 import { AplazoSidenavLinkComponent } from '@apz/shared-ui/sidenav';
 import { ROUTE_CONFIG } from '../config/routes.config';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   standalone: true,
@@ -18,6 +19,8 @@ import { ROUTE_CONFIG } from '../config/routes.config';
   ],
 })
 export class LayoutComponent {
+  constructor(private authService: AuthService) {}
+
   readonly #router = inject(Router);
 
   readonly appRoutes = ROUTE_CONFIG;
@@ -27,7 +30,7 @@ export class LayoutComponent {
   }
 
   onLogout(): void {
-    // TODO: remove token from storage
-    console.log('On logout');
+    this.authService.deleteUserDetails();
+    this.#router.navigate([ROUTE_CONFIG.home]);
   }
 }
