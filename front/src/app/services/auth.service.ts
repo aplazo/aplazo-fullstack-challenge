@@ -17,9 +17,10 @@ export class AuthService {
     localStorage.setItem(TOKEN_KEY, token);
   }
 
-  getUserDetails(): UserDetails {
-    const id = localStorage.getItem(USER_ID_KEY) || '';
-    const token = localStorage.getItem(TOKEN_KEY) || '';
+  getUserDetails(): UserDetails | null {
+    const id = localStorage.getItem(USER_ID_KEY);
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!id || !token) return null;
     return { id, token };
   }
 
@@ -29,9 +30,8 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    // TODO: check if token is expired
-    // return !!this.getToken();
-    return true;
+    const userDetails = this.getUserDetails();
+    return userDetails !== null;
   }
 }
 

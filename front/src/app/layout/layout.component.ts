@@ -26,7 +26,7 @@ export class LayoutComponent {
   readonly appRoutes = ROUTE_CONFIG;
 
   clickLogo(): void {
-    this.#router.navigate([ROUTE_CONFIG.home]);
+    this.#router.navigate([ROUTE_CONFIG.app, ROUTE_CONFIG.home]);
   }
 
   onLogout(): void {

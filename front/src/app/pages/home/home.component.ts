@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const userDetails = this.authService.getUserDetails();
+    const userDetails = this.authService.getUserDetails()!;
     this.form.setValue({
       customerId: userDetails.id,
       amount: 5,

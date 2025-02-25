@@ -4,6 +4,8 @@ import { LayoutComponent } from './layout/layout.component';
 import { HistorialComponent } from './pages/historial/historial.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { authGuard } from './auth.guard';
+import { loginGuard } from './login.guard';
 
 export const routes: Routes = [
   {
@@ -14,10 +16,12 @@ export const routes: Routes = [
   {
     path: ROUTE_CONFIG.register,
     component: RegisterComponent,
+    canActivate: [loginGuard],
   },
   {
     path: ROUTE_CONFIG.app,
     component: LayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
