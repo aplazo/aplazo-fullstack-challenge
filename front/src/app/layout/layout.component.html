@@ -6,7 +6,9 @@
       <h2 class="font-medium text-2xl">Layout Principal</h2>
 
       <button aplzButton aplzAppearance="basic" size="md" class="items-center">
-        <span class="lowercase font-light"> Cerrar sesión </span>
+        <span (click)="onLogout()" class="lowercase font-light">
+          Cerrar sesión
+        </span>
       </button>
     </nav>
   </aplz-ui-dash-header>

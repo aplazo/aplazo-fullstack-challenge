@@ -25,4 +25,9 @@ export class LayoutComponent {
   clickLogo(): void {
     this.#router.navigate([ROUTE_CONFIG.home]);
   }
+
+  onLogout(): void {
+    // TODO: remove token from storage
+    console.log('On logout');
+  }
 }
