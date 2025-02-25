@@ -1,5 +1,7 @@
-<form [formGroup]="form" (ngSubmit)="createLoan()">
-  <div class="grid gap-6 mb-6 md:grid-cols-2">
+<form [formGroup]="form" (ngSubmit)="createLoan()" class="max-w-md m-auto">
+  <div class="grid gap-6">
+    <h2 class="text-2xl font-bold mt-4">Crear préstamo</h2>
+
     <div>
       <label for="customerid" class="block mb-2 text-sm font-medium text-dark">
         Customer Id
@@ -32,16 +34,17 @@
     aplzAppearance="stroked"
     aplzColor="dark"
     size="md"
+    class="mt-4 w-full"
     type="submit"
   >
     Crear préstamo
   </button>
 
-  <div *ngIf="errorMessage" class="p-3">
+  <div *ngIf="errorMessage" class="text-center pt-3 text-special-danger">
     {{ errorMessage }}
   </div>
 
-  <div *ngIf="successMessage" class="p-3">
+  <div *ngIf="successMessage" class="text-center pt-3 text-special-success">
     {{ successMessage }}
   </div>
 </form>

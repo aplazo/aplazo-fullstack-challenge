@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
   createLoan(): void {
     console.log('Creating loan:', this.form.value);
     if (this.form.invalid) {
-      console.log('Invalid form');
+      this.errorMessage = 'Please fill out all fields';
       return;
     }
 
