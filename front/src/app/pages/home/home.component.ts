@@ -11,6 +11,7 @@ import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { CreateLoanRequest, LoansService } from '../../services/loans.service';
 import { AuthService } from '../../services/auth.service';
+import { amountValidator, uuidValidator } from '../../utils/validators';
 
 @Component({
   standalone: true,
@@ -34,13 +35,12 @@ export class HomeComponent implements OnInit {
 
   readonly customerId = new FormControl<string>('', {
     nonNullable: true,
-    // TODO: uuid validator
-    validators: [Validators.required],
+    validators: [Validators.required, uuidValidator],
   });
 
   readonly amount = new FormControl<number>(0, {
     nonNullable: true,
-    validators: [Validators.required],
+    validators: [Validators.required, amountValidator],
   });
 
   ngOnInit(): void {
