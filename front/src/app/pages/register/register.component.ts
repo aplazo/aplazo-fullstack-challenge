@@ -12,6 +12,8 @@ import {
   CustomersService,
 } from '../../services/customers.service';
 import { NgIf } from '@angular/common';
+import { Router } from '@angular/router';
+import { ROUTE_CONFIG } from '../../config/routes.config';
 
 @Component({
   standalone: true,
@@ -27,7 +29,10 @@ import { NgIf } from '@angular/common';
 export class RegisterComponent implements OnInit {
   errorMessage: string | null = null;
 
-  constructor(private customersService: CustomersService) {}
+  constructor(
+    private customersService: CustomersService,
+    private router: Router
+  ) {}
 
   readonly firstName = new FormControl<string>('', {
     nonNullable: true,
@@ -84,6 +89,7 @@ export class RegisterComponent implements OnInit {
     this.customersService.createCustomer(createCustomerRequest).subscribe({
       next: (customer) => {
         console.log('Customer created:', customer);
+        this.router.navigate([ROUTE_CONFIG.app, ROUTE_CONFIG.home]);
       },
       error: (error) => {
         console.error('Error creating customer:', error);
