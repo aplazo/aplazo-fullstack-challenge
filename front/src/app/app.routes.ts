@@ -17,6 +17,7 @@ export const routes: Routes = [
     path: ROUTE_CONFIG.register,
     component: RegisterComponent,
     canActivate: [loginGuard],
+    title: 'Register',
   },
   {
     path: ROUTE_CONFIG.app,
@@ -31,10 +32,12 @@ export const routes: Routes = [
       {
         path: ROUTE_CONFIG.home,
         component: HomeComponent,
+        title: 'Home',
       },
       {
         path: ROUTE_CONFIG.historial,
         component: HistorialComponent,
+        title: 'Historial',
       },
     ],
   },
