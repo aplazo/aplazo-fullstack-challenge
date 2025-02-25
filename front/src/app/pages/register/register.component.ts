@@ -58,12 +58,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO: remove this
+    /*
     this.form.setValue({
       firstName: 'John',
       lastName: 'Doe',
       secondLastName: 'Doe',
       dateOfBirth: new Date('2000-01-01'),
     });
+  */
   }
 
   readonly form = new FormGroup({
@@ -77,6 +79,7 @@ export class RegisterComponent implements OnInit {
     console.log('Registering customer:', this.form.value);
     if (this.form.invalid) {
       console.log('Invalid form');
+      this.errorMessage = 'Please fill out all fields';
       return;
     }
 

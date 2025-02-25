@@ -1,73 +1,86 @@
-<aplz-ui-logo size="lg"></aplz-ui-logo>
+<div class="my-8">
+  <aplz-ui-logo size="lg"></aplz-ui-logo>
 
-<form [formGroup]="form" (ngSubmit)="register()">
-  <div class="grid gap-6 mb-6 md:grid-cols-2">
-    <div>
-      <label for="username" class="block mb-2 text-sm font-medium text-dark">
-        Nombre(s)
-      </label>
-      <input
-        type="text"
-        id="firstname"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="Nombre(s)"
-        formControlName="firstName"
-      />
+  <form [formGroup]="form" (ngSubmit)="register()" class="max-w-md m-auto">
+    <div class="grid gap-6">
+      <div class="text-center">
+        <h2 class="text-2xl font-bold m-4">Información personal</h2>
+        <p class="text-lg font-thin text-dark-secondary">
+          Ayúdanos a completar tu información personal para verificar tu cuenta
+        </p>
+      </div>
+
+      <div>
+        <label for="username" class="block mb-2 text-sm font-medium text-dark">
+          Nombre(s)
+        </label>
+        <input
+          type="text"
+          id="firstname"
+          class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
+          placeholder="Ingresa tu nombre(s)"
+          formControlName="firstName"
+        />
+      </div>
+
+      <div>
+        <label for="lastname" class="block mb-2 text-sm font-medium text-dark">
+          Apellido paterno
+        </label>
+
+        <input
+          type="text"
+          id="lastname"
+          class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
+          placeholder="Ingresa tu apellido paterno"
+          formControlName="lastName"
+        />
+      </div>
+
+      <div>
+        <label for="lastname" class="block mb-2 text-sm font-medium text-dark">
+          Apellido materno
+        </label>
+
+        <input
+          type="text"
+          id="secondLastName"
+          class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
+          placeholder="Ingresa tu apellido materno"
+          formControlName="secondLastName"
+        />
+      </div>
+
+      <div>
+        <label
+          for="dateOfBirth"
+          class="block mb-2 text-sm font-medium text-dark"
+        >
+          Fecha de nacimiento
+        </label>
+
+        <input
+          type="date"
+          id="dateOfBirth"
+          class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
+          placeholder="DD/MM/AAAA"
+          formControlName="dateOfBirth"
+        />
+      </div>
     </div>
+    <button
+      aplzButton
+      aplzAppearance="stroked"
+      aplzColor="dark"
+      size="md"
+      class="mt-4 w-full"
+      type="submit"
+    >
+      Crear cuenta
+    </button>
 
-    <div>
-      <label for="lastname" class="block mb-2 text-sm font-medium text-dark">
-        Apellido paterno
-      </label>
-
-      <input
-        type="text"
-        id="lastname"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="Apellido paterno"
-        formControlName="lastName"
-      />
+    <div *ngIf="errorMessage" class="text-center pt-3 text-special-danger">
+      {{ errorMessage }}
     </div>
-
-    <div>
-      <label for="lastname" class="block mb-2 text-sm font-medium text-dark">
-        Apellido materno
-      </label>
-
-      <input
-        type="text"
-        id="secondLastName"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="Apellido materno"
-        formControlName="secondLastName"
-      />
-    </div>
-
-    <div>
-      <label for="dateOfBirth" class="block mb-2 text-sm font-medium text-dark">
-        Fecha de nacimiento
-      </label>
-
-      <input
-        type="date"
-        id="dateOfBirth"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="Fecha de nacimiento"
-        formControlName="dateOfBirth"
-      />
-    </div>
-  </div>
-  <button
-    aplzButton
-    aplzAppearance="stroked"
-    aplzColor="dark"
-    size="md"
-    type="submit"
-  >
-    Crear cuenta
-  </button>
-
-  <div *ngIf="errorMessage" class="p-3">
-    {{ errorMessage }}
-  </div>
-</form>
+  </form>
+</div>
