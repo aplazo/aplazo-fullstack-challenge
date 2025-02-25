@@ -9,8 +9,8 @@ import { AplazoButtonComponent } from '@apz/shared-ui/button';
 import { AplazoLogoComponent } from '@apz/shared-ui/logo';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { ROUTE_CONFIG } from '../../config/routes.config';
 import { CreateLoanRequest, LoansService } from '../../services/loans.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -26,10 +26,7 @@ import { CreateLoanRequest, LoansService } from '../../services/loans.service';
 export class HomeComponent implements OnInit {
   errorMessage: string | null = null;
 
-  constructor(
-    private loansService: LoansService,
-    private router: Router
-  ) {}
+  constructor(private loansService: LoansService, private router: Router) {}
 
   readonly customerId = new FormControl<string>('', {
     nonNullable: true,
@@ -42,7 +39,6 @@ export class HomeComponent implements OnInit {
     validators: [Validators.required],
   });
 
-
   ngOnInit(): void {
     // TODO: remove this
     this.form.setValue({
@@ -53,7 +49,7 @@ export class HomeComponent implements OnInit {
 
   readonly form = new FormGroup({
     customerId: this.customerId,
-    amount: this.amount
+    amount: this.amount,
   });
 
   createLoan(): void {
@@ -81,4 +77,3 @@ export class HomeComponent implements OnInit {
     });
   }
 }
-

@@ -16,7 +16,6 @@ export class LoansService {
   }
 
   createLoan(loan: CreateLoanRequest): Observable<LoanResponse> {
-    // TODO: send jwt token
     return this.http.post<LoanResponse>(this.apiUrl, loan);
   }
 }

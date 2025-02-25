@@ -14,6 +14,7 @@ import {
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { ROUTE_CONFIG } from '../../config/routes.config';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   standalone: true,
@@ -31,6 +32,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private customersService: CustomersService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -90,7 +92,7 @@ export class RegisterComponent implements OnInit {
       next: (response) => {
         const headers = response.headers;
         const token = headers.get('X-Auth-Token');
-        console.log('token', token);
+        this.authService.saveToken(token || '');
 
         const customer = response.body;
         console.log('Customer created:', customer);
