@@ -87,7 +87,12 @@ export class RegisterComponent implements OnInit {
       dateOfBirth: this.form.value.dateOfBirth || new Date(),
     };
     this.customersService.createCustomer(createCustomerRequest).subscribe({
-      next: (customer) => {
+      next: (response) => {
+        const headers = response.headers;
+        const token = headers.get('X-Auth-Token');
+        console.log('token', token);
+
+        const customer = response.body;
         console.log('Customer created:', customer);
         this.router.navigate([ROUTE_CONFIG.app, ROUTE_CONFIG.home]);
       },

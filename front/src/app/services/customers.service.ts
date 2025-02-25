@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,9 +18,11 @@ export class CustomersService {
   // Create a new user
   createCustomer(
     customer: CreateCustomerRequest
-  ): Observable<CustomerResponse> {
+  ): Observable<HttpResponse<CustomerResponse>> {
     console.log(customer);
-    return this.http.post<CustomerResponse>(this.apiUrl, customer);
+    return this.http.post<CustomerResponse>(this.apiUrl, customer, {
+      observe: 'response',
+    });
   }
 }
 
