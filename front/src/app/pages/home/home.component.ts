@@ -26,10 +26,10 @@ import { amountValidator, uuidValidator } from '../../utils/validators';
 })
 export class HomeComponent implements OnInit {
   errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   constructor(
     private loansService: LoansService,
-    private router: Router,
     private authService: AuthService
   ) {}
 
@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
     }
 
     this.errorMessage = null;
+    this.successMessage = null;
 
     const createLoanRequest: CreateLoanRequest = {
       customerId: this.customerId.value,
@@ -72,7 +73,8 @@ export class HomeComponent implements OnInit {
     this.loansService.createLoan(createLoanRequest).subscribe({
       next: (customer) => {
         console.log('Loan created:', customer);
-        // this.router.navigate([ROUTE_CONFIG.app, ROUTE_CONFIG.home]);
+        // TODO: show a snackbar or something?
+        this.successMessage = 'Loan created successfully';
       },
       error: (error) => {
         this.errorMessage = error.error?.message || 'Failed to create loan';
