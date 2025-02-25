@@ -10,6 +10,7 @@ import mx.aplazo.bnpl.customers.exception.CustomerNotFoundException;
 import mx.aplazo.bnpl.exceptions.ErrorCode;
 import mx.aplazo.bnpl.exceptions.ErrorResponse;
 import mx.aplazo.bnpl.exceptions.ErrorResponseBuilder;
+import mx.aplazo.bnpl.validation.annotations.ValidationExceptionParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -45,7 +46,7 @@ public class CustomersController {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ErrorResponse> handleCustomerValidation(MethodArgumentNotValidException ex, HttpServletRequest request) {
     ErrorCode error = ErrorCode.INVALID_CUSTOMER_REQUEST;
-    String message = ex.getBindingResult().getFieldError().getDefaultMessage();
+    String message = ValidationExceptionParser.parse(ex);
     return ErrorResponseBuilder.toResponse(message, request, error);
   }
 
