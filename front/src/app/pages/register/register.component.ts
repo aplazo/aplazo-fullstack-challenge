@@ -90,9 +90,7 @@ export class RegisterComponent implements OnInit {
     };
     this.customersService.createCustomer(createCustomerRequest).subscribe({
       next: (response) => {
-        const headers = response.headers;
-        const token = headers.get('X-Auth-Token');
-        this.authService.saveToken(token || '');
+        this.authService.saveCustomerDetails(response);
 
         const customer = response.body;
         console.log('Customer created:', customer);

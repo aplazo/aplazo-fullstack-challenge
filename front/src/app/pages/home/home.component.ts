@@ -10,7 +10,7 @@ import { AplazoLogoComponent } from '@apz/shared-ui/logo';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { CreateLoanRequest, LoansService } from '../../services/loans.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   standalone: true,
@@ -26,7 +26,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 export class HomeComponent implements OnInit {
   errorMessage: string | null = null;
 
-  constructor(private loansService: LoansService, private router: Router) {}
+  constructor(
+    private loansService: LoansService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   readonly customerId = new FormControl<string>('', {
     nonNullable: true,
@@ -40,9 +44,9 @@ export class HomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    // TODO: remove this
+    const userDetails = this.authService.getUserDetails();
     this.form.setValue({
-      customerId: '0ef9e80a-f68c-4a49-95a9-d39626e0acb6',
+      customerId: userDetails.id,
       amount: 5,
     });
   }
